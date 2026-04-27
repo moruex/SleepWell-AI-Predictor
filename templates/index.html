@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SleepWell - Uyku ve Bilişsel Analiz</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f7f4;
+        }
+
+        .health-gradient {
+            background: linear-gradient(135deg, #2d6a4f 0%, #40916c 100%);
+        }
+
+        .card {
+            background: white;
+            border-radius: 1.5rem;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+        }
+
+        .input-field {
+            border: 2px solid #e9ecef;
+            transition: all 0.3s;
+            border-radius: 0.75rem;
+        }
+
+        .input-field:focus {
+            border-color: #52b788;
+            outline: none;
+            box-shadow: 0 0 0 4px rgba(82, 183, 136, 0.1);
+        }
+
+        #loadingOverlay {
+            display: none;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(4px);
+        }
+    </style>
+</head>
+
+<body class="p-4 md:p-8">
+
+    <div class="max-w-5xl mx-auto">
+        <!-- Header -->
+        <header class="text-center mb-10">
+            <h1 class="text-4xl font-bold text-emerald-900 mb-2">SleepWell AI Analiz</h1>
+            <p class="text-emerald-700">Yaşam tarzınıza göre uyku risklerini ve bilişsel performansınızı keşfedin.</p>
+        </header>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Form Section -->
+            <div class="lg:col-span-2 card p-6 md:p-8">
+                <form id="predictForm" class="space-y-6">
+
+                    <!-- Kişisel Bilgiler -->
+                    <div class="border-b pb-4">
+                        <h2 class="text-xl font-semibold text-emerald-800 mb-4">Kişisel Bilgiler</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Yaş</label>
+                                <input type="number" name="age" required class="w-full p-3 input-field"
+                                    placeholder="Örn: 25">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Boy (cm)</label>
+                                <input type="number" name="height_cm" required class="w-full p-3 input-field"
+                                    placeholder="Örn: 175">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Kilo (kg)</label>
+                                <input type="number" name="weight_kg" required class="w-full p-3 input-field"
+                                    placeholder="Örn: 70">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Uyku Metrikleri -->
+                    <div class="border-b pb-4">
+                        <h2 class="text-xl font-semibold text-emerald-800 mb-4">Uyku Detayları</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Uyku Süresi (Saat)</label>
+                                <input type="number" step="0.1" name="sleep_duration_hrs" required
+                                    class="w-full p-3 input-field" placeholder="Örn: 7.5">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">REM %</label>
+                                <input type="number" name="rem_percentage" required class="w-full p-3 input-field"
+                                    placeholder="Örn: 20">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Derin Uyku %</label>
+                                <input type="number" name="deep_sleep_percentage" required
+                                    class="w-full p-3 input-field" placeholder="Örn: 15">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Uykuya Dalma (Dk)</label>
+                                <input type="number" name="sleep_latency_mins" required class="w-full p-3 input-field">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Uyanma Sayısı</label>
+                                <input type="number" name="wake_episodes_per_night" required
+                                    class="w-full p-3 input-field">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Stres Skoru (1-10)</label>
+                                <input type="number" name="stress_score" required class="w-full p-3 input-field" min="1"
+                                    max="10">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Yaşam Tarzı -->
+                    <div class="pb-4">
+                        <h2 class="text-xl font-semibold text-emerald-800 mb-4">Yaşam Tarzı ve Sağlık</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Meslek</label>
+                                <select name="occupation" class="w-full p-3 input-field">
+                                    <option value="Software Engineer">Yazılım Mühendisi</option>
+                                    <option value="Doctor">Doktor</option>
+                                    <option value="Student">Öğrenci</option>
+                                    <option value="Manager">Yönetici</option>
+                                    <option value="Teacher">Öğretmen</option>
+                                    <option value="Nurse">Hemşire</option>
+                                    <option value="Lawyer">Avukat</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Zihinsel Durum</label>
+                                <select name="mental_health_condition" class="w-full p-3 input-field">
+                                    <option value="Healthy">Sağlıklı</option>
+                                    <option value="Anxiety">Anksiyete</option>
+                                    <option value="Depression">Depresyon</option>
+                                    <option value="Both">Her İkisi</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Kafein (mg)</label>
+                                <input type="number" name="caffeine_mg_before_bed" required
+                                    class="w-full p-3 input-field">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Alkol (Birim)</label>
+                                <input type="number" step="0.1" name="alcohol_units_before_bed" required
+                                    class="w-full p-3 input-field">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Ekran Süresi (Dk)</label>
+                                <input type="number" name="screen_time_before_bed_mins" required
+                                    class="w-full p-3 input-field">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Günlük Adım</label>
+                                <input type="number" name="steps_that_day" required class="w-full p-3 input-field">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
+                            <label class="flex items-center space-x-2">
+                                <input type="checkbox" name="exercise_day" class="w-5 h-5 accent-emerald-600">
+                                <span class="text-sm text-gray-700">Egzersiz</span>
+                            </label>
+                            <label class="flex items-center space-x-2">
+                                <input type="checkbox" name="sleep_aid_used" class="w-5 h-5 accent-emerald-600">
+                                <span class="text-sm text-gray-700">Uyku İlacı</span>
+                            </label>
+                            <label class="flex items-center space-x-2">
+                                <input type="checkbox" name="shift_work" class="w-5 h-5 accent-emerald-600">
+                                <span class="text-sm text-gray-700">Vardiyalı</span>
+                            </label>
+                            <select name="day_type" class="p-2 input-field text-sm">
+                                <option value="Weekday">Hafta İçi</option>
+                                <option value="Weekend">Hafta Sonu</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <button type="submit"
+                        class="w-full health-gradient text-white font-bold py-4 rounded-xl transition hover:opacity-90 shadow-lg text-lg">
+                        Analizi Başlat
+                    </button>
+                </form>
+            </div>
+
+            <!-- Results Section -->
+            <div class="space-y-6">
+                <div class="card p-6 border-l-8 border-emerald-500">
+                    <h3 class="text-sm uppercase font-bold text-gray-500 mb-1">Bilişsel Performans</h3>
+                    <div id="cogResult" class="text-4xl font-bold text-emerald-800">--</div>
+                    <p class="text-xs text-gray-400 mt-2">100 üzerinden tahmin edilen skor</p>
+                </div>
+
+                <div class="card p-6 border-l-8 border-amber-500">
+                    <h3 class="text-sm uppercase font-bold text-gray-500 mb-1">Uyku Bozukluğu Riski</h3>
+                    <div id="disResult" class="text-4xl font-bold text-amber-800">--</div>
+                    <p id="disText" class="text-xs text-gray-400 mt-2">Risk seviyesi analizi</p>
+                </div>
+
+                <div class="card p-6 border-l-8 border-blue-500">
+                    <h3 class="text-sm uppercase font-bold text-gray-500 mb-1">Hesaplanan BMI</h3>
+                    <div id="bmiResult" class="text-4xl font-bold text-blue-800">--</div>
+                    <p class="text-xs text-gray-400 mt-2">Vücut Kitle İndeksi</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="fixed inset-0 z-50 flex items-center justify-center">
+        <div class="text-center">
+            <div
+                class="inline-block w-12 h-12 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin mb-4">
+            </div>
+            <p class="text-emerald-900 font-semibold">AI Verileri Analiz Ediyor...</p>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('predictForm');
+        const loading = document.getElementById('loadingOverlay');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            loading.style.display = 'flex';
+
+            const formData = new FormData(form);
+            const data = {};
+
+            formData.forEach((value, key) => {
+                // Sayısal değerleri dönüştür
+                if (['age', 'height_cm', 'weight_kg', 'sleep_duration_hrs', 'rem_percentage', 'deep_sleep_percentage',
+                    'sleep_latency_mins', 'wake_episodes_per_night', 'caffeine_mg_before_bed', 'alcohol_units_before_bed',
+                    'screen_time_before_bed_mins', 'steps_that_day', 'stress_score'].includes(key)) {
+                    data[key] = parseFloat(value);
+                } else {
+                    data[key] = value;
+                }
+            });
+
+            // Checkbox ve diğer eksik alanları ekle
+            data.exercise_day = form.exercise_day.checked ? 1 : 0;
+            data.sleep_aid_used = form.sleep_aid_used.checked ? "Yes" : "No";
+            data.shift_work = form.shift_work.checked ? "Yes" : "No";
+
+            // Sabit varsayılanlar (modelin beklediği ama formda olmayanlar için)
+            data.nap_duration_mins = 0;
+            data.work_hours_that_day = 8.0;
+            data.heart_rate_resting_bpm = 70;
+
+            try {
+                const response = await fetch('/predict', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+
+                if (!response.ok) throw new Error('Sunucu hatası');
+
+                const result = await response.json();
+
+                // Sonuçları ekrana bas
+                document.getElementById('cogResult').innerText = result.cognitive_performance_score;
+                document.getElementById('bmiResult').innerText = result.calculated_bmi;
+
+                const riskMap = ["Sağlıklı", "Düşük Risk", "Orta Risk", "Yüksek Risk"];
+                document.getElementById('disResult').innerText = riskMap[result.sleep_disorder_risk] || result.sleep_disorder_risk;
+                document.getElementById('disText').innerText = "Model tarafından saptanan durum.";
+
+            } catch (error) {
+                alert("Bir hata oluştu: " + error.message);
+            } finally {
+                loading.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+
+</html>
