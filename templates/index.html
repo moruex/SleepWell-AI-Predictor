@@ -81,7 +81,20 @@
 
                     <!-- Uyku Metrikleri -->
                     <div class="border-b pb-4">
-                        <h2 class="text-xl font-semibold text-emerald-800 mb-4">Uyku Detayları</h2>
+                        <div class="flex items-center justify-between mb-2">
+                            <h2 class="text-xl font-semibold text-emerald-800">Uyku Detayları</h2>
+                        </div>
+                        <div
+                            class="bg-emerald-50 border border-emerald-100 rounded-lg p-3 mb-5 text-sm text-emerald-800 flex items-start space-x-3">
+                            <svg class="w-5 h-5 mt-0.5 flex-shrink-0 text-emerald-600" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            <p><strong>Bilgi:</strong> Uyku süresi, REM, derin uyku ve uykuya dalma verilerini akıllı
+                                saat ya da yüzüğünüzdeki bilgilerden doldurabilirsiniz. Stresi ise kendinizi nasıl
+                                hissettiğinize göre puanlayabilirsiniz.</p>
+                        </div>
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-1">Uyku Süresi (Saat)</label>
@@ -199,16 +212,19 @@
                     <h3 class="text-sm uppercase font-bold text-gray-500 mb-1">Bilişsel Performans</h3>
                     <div id="cogResult" class="text-4xl font-bold text-emerald-800">--</div>
                     <p class="text-xs text-gray-400 mt-2">100 üzerinden tahmin edilen skor</p>
-                    
+
                     <div class="mt-4 pt-4 border-t border-gray-100 space-y-2 text-left">
                         <p class="text-[11px] leading-tight text-gray-600">
-                            <span class="font-bold text-emerald-700">Zihinsel Keskinlik:</span> Bilgiyi işleme hızı ve mantıklı karar yeteneği.
+                            <span class="font-bold text-emerald-700">Zihinsel Keskinlik:</span> Bilgiyi işleme hızı ve
+                            mantıklı karar yeteneği.
                         </p>
                         <p class="text-[11px] leading-tight text-gray-600">
-                            <span class="font-bold text-emerald-700">Odaklanma Gücü:</span> Dikkatini verimli ve kesintisiz sürdürme kapasitesi.
+                            <span class="font-bold text-emerald-700">Odaklanma Gücü:</span> Dikkatini verimli ve
+                            kesintisiz sürdürme kapasitesi.
                         </p>
                         <p class="text-[11px] leading-tight text-gray-600">
-                            <span class="font-bold text-emerald-700">Hafıza ve Öğrenme:</span> Bilgiyi kaydetme ve geri çağırma performansı.
+                            <span class="font-bold text-emerald-700">Hafıza ve Öğrenme:</span> Bilgiyi kaydetme ve geri
+                            çağırma performansı.
                         </p>
                     </div>
                 </div>
@@ -220,13 +236,18 @@
                 </div>
 
                 <div class="card p-6 border-l-8 border-blue-500">
-                    <h3 class="text-sm uppercase font-bold text-gray-500 mb-1">Hesaplanan BMI</h3>
+                    <h3 class="text-sm uppercase font-bold text-gray-500 mb-1">BMI</h3>
                     <div id="bmiResult" class="text-4xl font-bold text-blue-800">--</div>
                     <p class="text-xs text-gray-400 mt-2">Vücut Kitle İndeksi</p>
                 </div>
             </div>
         </div>
-    </div>
+
+        <!-- Disclaimer Footer -->
+        <footer class="mt-8 text-center text-xs text-gray-400 border-t border-gray-200 pt-6">
+            <p><strong>Yasal Uyarı:</strong> Bu platformdaki sonuçlar sadece bir proje/çalışma amaçlıdır ve gerçek tıbbi
+                değerleri veya kesin teşhisleri yansıtmaz.</p>
+        </footer>
     </div>
 
     <!-- Loading Overlay -->
