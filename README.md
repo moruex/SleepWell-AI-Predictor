@@ -1,4 +1,4 @@
-# SleepWell AI Analiz Sistemi
+# SleepWell ML Analiz Sistemi
 
 Bu proje, yasam tarzi verilerini kullanarak kisilerin Uyku Bozuklugu Riskini ve Bilisel Performans Skorunu tahmin eden uctan uca bir Makine Ogrenmesi uygulamasidir.
 
