@@ -24,3 +24,13 @@ Uygulama basladiktan sonra tarayicinizdan http://localhost:8000 adresine giderek
 * models/: Egitilmis model dosyalari (.joblib).
 * templates/: Web arayuzu (index.html).
 * Dockerfile: Konteyner konfigurasyonu.
+
+## Model Performansı
+
+### Uyku Bozukluğu Riski Modeli (Sınıflandırma)
+* **Doğruluk (Accuracy):** %94.1
+
+### Bilişsel Performans Modeli (Regresyon)
+* **R2 Skoru:** 0.932
+* **RMSE:** 5.76
+* **MAE:** 4.61
